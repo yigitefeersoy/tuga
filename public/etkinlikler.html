@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinliklerimiz - TÜGA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome İkonları -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%); }
+        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased flex flex-col min-h-screen">
+
+    <!-- TÜGA ÜST MENÜ (NAVBAR) -->
+    <header class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+               <!-- LOGO -->
+<a href="index.html" class="flex items-center gap-3">
+    <img src="logo.jpg" alt="TÜGA Logo" class="h-10 w-auto object-contain rounded-lg">
+    <span class="font-bold text-xl tracking-tight text-white">
+        TÜGA 
+        <span class="text-xs font-normal text-slate-400 block -mt-1">Türkiye Girişim Ağı</span>
+    </span>
+</a>
+
+                <!-- MENÜ LİNKLERİ (ANA SAYFA BUTONU DAHİL) -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-sm font-medium text-slate-300 hover:text-sky-400 py-1 transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-house text-xs"></i> Ana Sayfa
+                    </a>
+                    <a href="index.html#hakkimizda" class="text-sm font-medium text-slate-300 hover:text-sky-400 py-1 transition-colors">
+                        Hakkımızda
+                    </a>
+                    <a href="index.html#rakamlar" class="text-sm font-medium text-slate-300 hover:text-sky-400 py-1 transition-colors">
+                        Rakamlarla TÜGA
+                    </a>
+                    <a href="index.html#projeler" class="text-sm font-medium text-slate-300 hover:text-sky-400 py-1 transition-colors">
+                        Projelerimiz
+                    </a>
+                   <!-- AKTİF ETKİNLİKLERİMİZ SAYFASI -->
+                   <a href="/etkinlikler.html" class="text-sm font-semibold text-sky-400 py-1 flex items-center gap-1.5 bg-sky-500/10 px-3 py-1.5 rounded-full border border-sky-500/20 hover:bg-sky-500/20 transition-all cursor-pointer">
+                     <i class="fa-solid fa-calendar-days text-xs"></i>
+                    Etkinliklerimiz
+                   </a>
+                    <a href="index.html#iletisim" class="text-sm font-medium text-slate-300 hover:text-sky-400 py-1 transition-colors">
+                        İletişim
+                    </a>
+                </nav>
+
+                <!-- MOBİL MENÜ BUTONU -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-slate-300 hover:text-white p-2">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- MOBİL MENÜ -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2">
+            <a href="index.html" class="block w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800">🏠 Ana Sayfa</a>
+            <a href="index.html#hakkimizda" class="block w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800">Hakkımızda</a>
+            <a href="index.html#rakamlar" class="block w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800">Rakamlarla TÜGA</a>
+            <a href="index.html#projeler" class="block w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800">Projelerimiz</a>
+            <span class="block w-full text-left px-3 py-2 rounded-lg text-sky-400 font-semibold bg-slate-800">📅 Etkinliklerimiz</span>
+            <a href="index.html#iletisim" class="block w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800">İletişim</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow">
+        <!-- HERO SECTION -->
+        <section class="gradient-bg py-16 border-b border-slate-800">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-300 text-xs font-semibold uppercase tracking-wider mb-4">
+                    🎯 TÜGA Etkinlik & Kamp Merkezi
+                </span>
+                <h1 class="text-3xl sm:text-5xl font-extrabold mb-4 tracking-tight">
+                    Gelişim, Eğitim ve <span class="gradient-text">Gelecek</span>
+                </h1>
+                <p class="text-slate-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+                    Türkiye Girişim Ağı bünyesinde gerçekleşen kamplar ve yetkinlik programlarının detaylarını buradan inceleyebilirsiniz.
+                </p>
+            </div>
+        </section>
+
+        <!-- AKTİF VE GEÇMİŞ ETKİNLİK LİSTE ALANLARI -->
+        <section class="py-12 max-w-5xl mx-auto px-4 space-y-12">
+            <!-- AKTİF ETKİNLİKLER -->
+            <div>
+                <h2 class="text-2xl font-bold mb-6 text-sky-400 flex items-center gap-2">
+                    <i class="fa-solid fa-bolt"></i> Aktif & Yaklaşan Etkinlikler
+                </h2>
+                <div id="active-events-container" class="space-y-6">
+                    <!-- JS ile doldurulacak -->
+                </div>
+            </div>
+
+            <!-- GEÇMİŞ ETKİNLİKLER (OTOMATİK GEÇENLER) -->
+            <div>
+                <h2 class="text-2xl font-bold mb-6 text-slate-500 flex items-center gap-2">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Geçmiş Etkinlikler
+                </h2>
+                <div id="past-events-container" class="space-y-6 opacity-75">
+                    <!-- JS ile doldurulacak -->
+                </div>
+            </div>
+        </section>
+
+        <script>
+            async function fetchAndRenderEvents() {
+                try {
+                    const response = await fetch('/api/events');
+                    const events = await response.json();
+
+                    const activeContainer = document.getElementById('active-events-container');
+                    const pastContainer = document.getElementById('past-events-container');
+
+                    activeContainer.innerHTML = '';
+                    pastContainer.innerHTML = '';
+
+                    const today = new Date().toISOString().split('T')[0];
+
+                    events.forEach(event => {
+                        const isPast = event.endDate < today;
+
+                        const cardHTML = `
+                            <div class="glass-card rounded-2xl p-6 border ${isPast ? 'border-slate-800 bg-slate-900/40' : 'border-sky-500/30'} flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                                <div>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold ${isPast ? 'bg-slate-800 text-slate-400' : 'bg-sky-500/10 text-sky-400 border border-sky-500/20'}">
+                                            ${isPast ? 'Tamamlandı' : 'Aktif Etkinlik'}
+                                        </span>
+                                        <span class="text-xs text-slate-400"><i class="fa-regular fa-calendar"></i> ${event.startDate} — ${event.endDate}</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-white mb-1">${event.title}</h3>
+                                    <p class="text-sm text-slate-300">${event.description}</p>
+                                </div>
+                                <div class="shrink-0 w-full md:w-auto">
+                                    ${isPast ? 
+                                        `<span class="inline-block px-4 py-2 rounded-xl bg-slate-800 text-slate-500 text-xs font-bold cursor-not-allowed">Başvurular Kapandı</span>` : 
+                                        `<a href="${event.link}" target="_blank" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-sm transition w-full md:w-auto">Katıl / Başvur <i class="fa-solid fa-arrow-right"></i></a>`
+                                    }
+                                </div>
+                            </div>
+                        `;
+
+                        if (isPast) {
+                            pastContainer.innerHTML += cardHTML;
+                        } else {
+                            activeContainer.innerHTML += cardHTML;
+                        }
+                    });
+
+                    if (activeContainer.innerHTML === '') {
+                        activeContainer.innerHTML = `<p class="text-sm text-slate-500 italic">Şu an aktif bir etkinlik bulunmamaktadır.</p>`;
+                    }
+                    if (pastContainer.innerHTML === '') {
+                        pastContainer.innerHTML = `<p class="text-sm text-slate-500 italic">Geçmiş etkinlik bulunmamaktadır.</p>`;
+                    }
+
+                } catch (error) {
+                    console.error('Etkinlikler çekilemedi:', error);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', fetchAndRenderEvents);
+        </script>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 border-t border-slate-900 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div>
+                    <div class="font-bold text-lg text-white">TÜGA - Türkiye Girişim Ağı</div>
+                    <p class="text-xs text-slate-500 mt-1">Geleceğe yatırım yap, bağlantılar kur, fark yarat.</p>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
+                    <a href="index.html" class="hover:text-white transition">Ana Sayfa</a>
+                    <a href="index.html#hakkimizda" class="hover:text-white transition">Hakkımızda</a>
+                    <a href="index.html#rakamlar" class="hover:text-white transition">Rakamlar</a>
+                    <a href="index.html#projeler" class="hover:text-white transition">Projeler</a>
+                    <a href="etkinlikler.html" class="hover:text-white transition text-sky-400">Etkinliklerimiz</a>
+                    <a href="index.html#iletisim" class="hover:text-white transition">İletişim</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-slate-900/60 text-center text-xs text-slate-600">
+                &copy; 2026 Türkiye Girişim Ağı (TÜGA). Tüm hakları saklıdır.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+// Tarihi Türkçe formatına çeviren yardımcı fonksiyon
+function formatTurkishDate(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('tr-TR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+}
+
+// Veritabanından Etkinlikleri Yükleme
+async function loadEvents() {
+    try {
+        const response = await fetch('/api/events');
+        const events = await response.json();
+        const container = document.getElementById('events-container');
+
+        if (!container) return;
+
+        if (events.length === 0) {
+            container.innerHTML = `<p class="text-slate-400 text-center col-span-full py-12">Henüz aktif bir etkinlik bulunmamaktadır.</p>`;
+            return;
+        }
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); 
+
+        container.innerHTML = events.map(e => {
+            const eventStart = new Date(e.startDate);
+            eventStart.setHours(0, 0, 0, 0);
+
+            // Başlama tarihi bugün veya öncesiyse başvurular kapanır
+            const isClosed = today >= eventStart;
+
+            let actionButton = '';
+            if (isClosed) {
+                actionButton = `
+                    <div class="w-full text-center py-2.5 px-4 bg-slate-800/80 text-rose-400 border border-rose-500/30 rounded-xl font-medium text-sm flex items-center justify-center gap-2 cursor-not-allowed select-none">
+                        <i class="fa-solid fa-lock text-xs"></i>
+                        Başvurular Kapandı
+                    </div>
+                `;
+            } else {
+                actionButton = `
+                    <a href="${e.link}" target="_blank" rel="noopener noreferrer" class="w-full text-center py-2.5 px-4 bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold rounded-xl transition-all flex items-center justify-center gap-2">
+                        <span>Başvuru Yap</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                `;
+            }
+
+            return `
+                <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between hover:border-slate-700 transition-all">
+                    <div>
+                        <div class="flex items-center justify-between text-xs text-sky-400 mb-3 font-medium">
+                            <span><i class="fa-regular fa-calendar me-1"></i>${formatTurkishDate(e.startDate)}</span>
+                            <span>${isClosed ? '<span class="text-rose-400 font-semibold">• Kapandı</span>' : '<span class="text-emerald-400 font-semibold">• Aktif</span>'}</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">${e.title}</h3>
+                        <p class="text-slate-400 text-sm mb-6 line-clamp-3">${e.description}</p>
+                    </div>
+                    ${actionButton}
+                </div>
+            `;
+        }).join('');
+
+    } catch (err) {
+        console.error("Etkinlikler yüklenirken hata oluştu:", err);
+    }
+}
+
+// Sayfa açıldığında etkinlikleri getir
+document.addEventListener('DOMContentLoaded', loadEvents);
+</script>
+
+</body>
+</html>

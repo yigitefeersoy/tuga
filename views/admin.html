@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="tr-TR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TÜGA Yönetim Paneli</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans">
+
+    <!-- GİRİŞ EKRANI -->
+    <div id="login-screen" class="flex items-center justify-center min-h-screen px-4">
+        <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl w-full max-w-md shadow-2xl">
+            <div class="text-center mb-6">
+                <i class="fa-solid fa-shield-halved text-4xl text-sky-400 mb-2"></i>
+                <h1 class="text-2xl font-bold">TÜGA Admin Girişi</h1>
+            </div>
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Kullanıcı Adı</label>
+                    <input type="text" id="username" required autocomplete="off" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1">Şifre</label>
+                    <input type="password" id="password" required autocomplete="off" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-sky-500">
+                </div>
+                <button type="submit" class="w-full bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold py-2.5 rounded-lg transition">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="hidden min-h-screen flex flex-col">
+        <header class="bg-slate-900 border-b border-slate-800 py-4 px-6 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-shield-halved text-sky-400 text-xl"></i>
+                <div>
+                    <h1 class="font-bold text-base leading-none">TÜGA Yönetim Paneli</h1>
+                    <span id="user-badge" class="text-xs text-slate-400"></span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="/" class="text-xs text-slate-400 hover:text-white flex items-center gap-1"><i class="fa-solid fa-globe"></i> Siteye Git</a>
+                <button onclick="logout()" class="bg-rose-500/10 text-rose-400 border border-rose-500/20 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-rose-500 hover:text-white transition flex items-center gap-1">
+                    <i class="fa-solid fa-right-from-bracket"></i> Çıkış Yap
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-6xl mx-auto w-full p-6 space-y-8 flex-grow">
+            <div class="flex gap-4 border-b border-slate-800 pb-3">
+                <button onclick="switchTab('events')" id="tab-btn-events" class="text-sm font-bold px-4 py-2 rounded-lg bg-sky-500 text-slate-950">
+                    <i class="fa-solid fa-calendar-days mr-1"></i> Etkinlik Yönetimi
+                </button>
+                <button onclick="switchTab('users')" id="tab-btn-users" class="hidden text-sm font-bold px-4 py-2 rounded-lg bg-slate-900 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-users-gear mr-1"></i> Admin / Kullanıcı Yönetimi
+                </button>
+            </div>
+
+            <!-- ETKİNLİK YÖNETİMİ PANELİ -->
+            <div id="tab-events" class="space-y-4">
+                <div class="flex justify-between items-center bg-slate-900 p-4 rounded-xl border border-slate-800">
+                    <h2 class="font-bold text-lg">Tüm Etkinlikler</h2>
+                    <button onclick="openEventModal()" class="bg-sky-500 hover:bg-sky-400 text-slate-950 text-xs font-bold px-4 py-2 rounded-lg transition">
+                        <i class="fa-solid fa-plus mr-1"></i> Yeni Etkinlik Oluştur
+                    </button>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <table class="w-full text-left text-sm text-slate-300">
+                        <thead class="bg-slate-950 text-xs text-slate-400 uppercase">
+                            <tr>
+                                <th class="p-4">Etkinlik Adı</th>
+                                <th class="p-4">Tarih Aralığı</th>
+                                <th class="p-4 text-right">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="events-table-body" class="divide-y divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- KULLANICI YÖNETİMİ PANELİ -->
+            <div id="tab-users" class="hidden space-y-4">
+                <div class="flex justify-between items-center bg-slate-900 p-4 rounded-xl border border-slate-800">
+                    <h2 class="font-bold text-lg">Yöneticiler ve Yetkiler</h2>
+                    <button onclick="openUserModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold px-4 py-2 rounded-lg transition">
+                        <i class="fa-solid fa-user-plus mr-1"></i> Yeni Kullanıcı Oluştur
+                    </button>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+                    <table class="w-full text-left text-sm text-slate-300">
+                        <thead class="bg-slate-950 text-xs text-slate-400 uppercase">
+                            <tr>
+                                <th class="p-4">Kullanıcı Adı</th>
+                                <th class="p-4">Rol</th>
+                                <th class="p-4">Son Görülme (Giriş Tarihi)</th>
+                                <th class="p-4 text-right">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body" class="divide-y divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ETKİNLİK MODALI -->
+    <div id="event-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-lg space-y-4">
+            <h3 id="event-modal-title" class="font-bold text-lg">Yeni Etkinlik</h3>
+            <form id="event-form" class="space-y-3">
+                <input type="hidden" id="event-id">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Etkinlik Adı</label>
+                    <input type="text" id="event-title" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Açıklama</label>
+                    <textarea id="event-desc" rows="3" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Katılım Linki</label>
+                    <input type="url" id="event-link" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Başlangıç Tarihi</label>
+                        <input type="date" id="event-start" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-1">Bitiş Tarihi</label>
+                        <input type="date" id="event-end" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeModal('event-modal')" class="px-4 py-2 bg-slate-800 text-xs rounded-lg">İptal</button>
+                    <button type="submit" class="px-4 py-2 bg-sky-500 text-slate-950 font-bold text-xs rounded-lg">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- KULLANICI MODALI -->
+    <div id="user-modal" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl w-full max-w-sm space-y-4">
+            <h3 id="user-modal-title" class="font-bold text-lg">Yeni Kullanıcı Ekle</h3>
+            <form id="user-form" class="space-y-3">
+                <input type="hidden" id="user-id">
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Kullanıcı Adı</label>
+                    <input type="text" id="new-username" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Şifre <span id="pass-hint" class="text-[10px] text-slate-500">(Boş bırakılırsa değişmez)</span></label>
+                    <input type="password" id="new-password" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-400 mb-1">Yetki Rolü</label>
+                    <select id="new-role" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-sm text-white">
+                        <option value="moderator">Yetkili (Sadece Etkinlikler)</option>
+                        <option value="developer">Geliştirici (Tam Yetki)</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeModal('user-modal')" class="px-4 py-2 bg-slate-800 text-xs rounded-lg">İptal</button>
+                    <button type="submit" class="px-4 py-2 bg-indigo-600 text-white font-bold text-xs rounded-lg">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = '/api';
+        let token = localStorage.getItem('adminToken');
+        let userRole = localStorage.getItem('userRole');
+        let username = localStorage.getItem('username');
+
+        if (token) showDashboard();
+
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const res = await fetch(`${API_URL}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    username: document.getElementById('username').value,
+                    password: document.getElementById('password').value
+                })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                token = data.token;
+                userRole = data.role;
+                username = data.username;
+                localStorage.setItem('adminToken', token);
+                localStorage.setItem('userRole', userRole);
+                localStorage.setItem('username', username);
+                showDashboard();
+            } else {
+                alert(data.error);
+            }
+        });
+
+        function showDashboard() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('user-badge').innerText = `@${username} (${userRole === 'developer' ? 'Geliştirici' : 'Yetkili'})`;
+
+            if (userRole === 'developer') {
+                document.getElementById('tab-btn-users').classList.remove('hidden');
+            }
+
+            loadEvents();
+        }
+
+        function logout() {
+            localStorage.clear();
+            location.reload();
+        }
+
+        function switchTab(tab) {
+            if (tab === 'events') {
+                document.getElementById('tab-events').classList.remove('hidden');
+                document.getElementById('tab-users').classList.add('hidden');
+                document.getElementById('tab-btn-events').className = "text-sm font-bold px-4 py-2 rounded-lg bg-sky-500 text-slate-950";
+                document.getElementById('tab-btn-users').className = "text-sm font-bold px-4 py-2 rounded-lg bg-slate-900 text-slate-400 hover:text-white";
+                loadEvents();
+            } else {
+                document.getElementById('tab-events').classList.add('hidden');
+                document.getElementById('tab-users').classList.remove('hidden');
+                document.getElementById('tab-btn-users').className = "text-sm font-bold px-4 py-2 rounded-lg bg-indigo-600 text-white";
+                document.getElementById('tab-btn-events').className = "text-sm font-bold px-4 py-2 rounded-lg bg-slate-900 text-slate-400 hover:text-white";
+                loadUsers();
+            }
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        async function loadEvents() {
+            const res = await fetch(`${API_URL}/events`);
+            const events = await res.json();
+            const tbody = document.getElementById('events-table-body');
+            tbody.innerHTML = events.map(e => `
+                <tr>
+                    <td class="p-4 font-bold text-white">${e.title}</td>
+                    <td class="p-4 text-xs text-slate-400">${e.startDate} / ${e.endDate}</td>
+                    <td class="p-4 text-right space-x-2">
+                        <button onclick='editEvent(${JSON.stringify(e)})' class="text-sky-400 hover:text-sky-300"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteEvent(${e.id})" class="text-rose-400 hover:text-rose-300"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openEventModal() {
+            document.getElementById('event-form').reset();
+            document.getElementById('event-id').value = '';
+            document.getElementById('event-modal-title').innerText = 'Yeni Etkinlik';
+            document.getElementById('event-modal').classList.remove('hidden');
+        }
+
+        function editEvent(e) {
+            document.getElementById('event-id').value = e.id;
+            document.getElementById('event-title').value = e.title;
+            document.getElementById('event-desc').value = e.description;
+            document.getElementById('event-link').value = e.link;
+            document.getElementById('event-start').value = e.startDate;
+            document.getElementById('event-end').value = e.endDate;
+            document.getElementById('event-modal-title').innerText = 'Etkinliği Düzenle';
+            document.getElementById('event-modal').classList.remove('hidden');
+        }
+
+        document.getElementById('event-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('event-id').value;
+            const payload = {
+                title: document.getElementById('event-title').value,
+                description: document.getElementById('event-desc').value,
+                link: document.getElementById('event-link').value,
+                startDate: document.getElementById('event-start').value,
+                endDate: document.getElementById('event-end').value,
+            };
+
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `${API_URL}/events/${id}` : `${API_URL}/events`;
+
+            await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify(payload)
+            });
+
+            closeModal('event-modal');
+            loadEvents();
+        });
+
+        async function deleteEvent(id) {
+            if (!confirm('Etkinliği silmek istediğinize emin misiniz?')) return;
+            await fetch(`${API_URL}/events/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            loadEvents();
+        }
+
+        async function loadUsers() {
+            const res = await fetch(`${API_URL}/users`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const users = await res.json();
+            const tbody = document.getElementById('users-table-body');
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td class="p-4 font-bold text-white">${u.username}</td>
+                    <td class="p-4">
+                        <span class="px-2 py-1 rounded text-xs font-bold ${u.role === 'developer' ? 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30' : 'bg-slate-800 text-slate-300'}">
+                            ${u.role === 'developer' ? 'Geliştirici' : 'Yetkili'}
+                        </span>
+                    </td>
+                    <td class="p-4 text-xs font-mono text-slate-400">${u.lastLogin || 'Henüz Giriş Yapmadı'}</td>
+                    <td class="p-4 text-right space-x-2">
+                        <button onclick='editUser(${JSON.stringify(u)})' class="text-indigo-400 hover:text-indigo-300"><i class="fa-solid fa-pen"></i></button>
+                        ${u.username !== 'ygttdev' ? `<button onclick="deleteUser(${u.id})" class="text-rose-400 hover:text-rose-300"><i class="fa-solid fa-trash"></i></button>` : '<span class="text-xs text-slate-500">(Korumalı)</span>'}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openUserModal() {
+            document.getElementById('user-form').reset();
+            document.getElementById('user-id').value = '';
+            document.getElementById('pass-hint').classList.add('hidden');
+            document.getElementById('new-password').required = true;
+            document.getElementById('user-modal-title').innerText = 'Yeni Kullanıcı Oluştur';
+            document.getElementById('user-modal').classList.remove('hidden');
+        }
+
+        function editUser(u) {
+            document.getElementById('user-id').value = u.id;
+            document.getElementById('new-username').value = u.username;
+            document.getElementById('new-password').value = '';
+            document.getElementById('new-password').required = false;
+            document.getElementById('pass-hint').classList.remove('hidden');
+            document.getElementById('new-role').value = u.role;
+            document.getElementById('user-modal-title').innerText = 'Kullanıcıyı Düzenle';
+            document.getElementById('user-modal').classList.remove('hidden');
+        }
+
+        document.getElementById('user-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('user-id').value;
+            const payload = {
+                username: document.getElementById('new-username').value,
+                password: document.getElementById('new-password').value,
+                role: document.getElementById('new-role').value
+            };
+
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `${API_URL}/users/${id}` : `${API_URL}/users`;
+
+            const res = await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+            if (!res.ok) alert(data.error);
+            else {
+                closeModal('user-modal');
+                loadUsers();
+            }
+        });
+
+        async function deleteUser(id) {
+            if (!confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?')) return;
+            const res = await fetch(`${API_URL}/users/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const data = await res.json();
+            if (!res.ok) alert(data.error);
+            else loadUsers();
+        }
+    </script>
+</body>
+</html>
